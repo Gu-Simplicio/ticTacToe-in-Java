@@ -1,0 +1,188 @@
+//import the scanner function 
+import java.util.Scanner;
+
+//class of the game
+public class ticTacToe{
+    //global variables with the first player, second player and what player's playing in the moment
+    private static String playerOne, playerTwo;
+    
+    //array with the positions of the game
+    private static String positions[][] = {
+            {" ", " ", " "},
+            {" ", " ", " "},
+            {" ", " ", " "}
+        };
+    //instance a Scanner 
+    private static Scanner scan = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        String playerTime;
+
+        do {
+            System.out.print("Insert the 1° player's name: ");
+            playerOne = scan.nextLine();
+            
+            System.out.print("Insert the 2° player's name: ");
+            playerTwo = scan.nextLine();
+            
+            playerTime = playerOne;
+
+
+            do {
+                if(playerTime == playerOne){
+                    play(playerOne);
+
+                    playerTime = playerTwo;
+                } else {
+                    play(playerTwo);
+                    playerTime = playerOne;
+                }
+
+                if(checkEnd() == "full"){
+                    drawGame();
+                    System.out.println("Full game!");
+                    break;
+                }    
+                if(checkEnd() == "playerOne"){
+                    System.out.printf("%s wins!\n", playerOne);
+                    break;
+                }
+                if(checkEnd() == "playerTwo"){
+                    System.out.printf("%s wins!\n", playerTwo);
+                    break;
+                }
+            }while(true);
+            
+            break;
+        }while(true);
+    
+        scan.close();
+    }
+
+    static void drawGame(){
+        String aux[] = {"a", "b", "c"};
+
+        for(int i = 0; i < positions.length; i++){
+            if(i == 0)System.out.print("  1   2   3\n");
+
+            for(int j = 0; j < positions[i].length; j++){
+
+                if(j == 0) System.out.print(aux[i] + " ");
+
+                System.out.print(positions[i][j]);
+
+                if(j < positions.length - 1) System.out.print(" | ");
+            }
+            System.out.println();
+        }
+    }
+
+    static void play(String player){
+        String choose;
+        int posChoosed[] = {0, 0};
+
+        System.out.println("Actual game:");
+        drawGame();
+
+        do{
+            System.out.printf("\n%s, insert where you'll insert (type the letter and after the number):", player);
+            choose = scan.nextLine();
+
+            if(choose.length() != 2){
+                System.out.println("Insert a letter and, after, a number!");
+                continue;
+            } else if(choose.charAt(0) != 'a' && choose.charAt(0) != 'b' && choose.charAt(0) != 'c'){
+                System.out.println("Insert an valid letter on first char!");
+                continue;
+            } else if(choose.charAt(1) != '1' && choose.charAt(1) != '2' && choose.charAt(1) != '3'){
+                System.out.println("Insert an valid number on second char!");
+                continue;
+            } 
+
+            switch (choose.charAt(0)) {
+                case 'a':
+                    posChoosed[0] = 0;
+                    break;
+                case 'b':
+                    posChoosed[0] = 1;
+                    break;
+                case 'c':
+                    posChoosed[0] = 2;
+                    break;
+            }
+            switch (choose.charAt(1)) {
+                case '1':
+                    posChoosed[1] = 0;
+                    break;
+                case '2':
+                    posChoosed[1] = 1;
+                    break;
+                case '3':
+                    posChoosed[1] = 2;
+                    break;
+            }
+
+            if(checkInsertable(posChoosed)){
+                if(player == playerOne) {
+                    positions[posChoosed[0]][posChoosed[1]] = "X";
+                } else {
+                    positions[posChoosed[0]][posChoosed[1]] = "O";
+                }
+                break;   
+            } else {
+                System.out.println("Insert an valid place!");
+            }
+        }while(true);
+    }
+
+    static boolean checkInsertable(int[] posChoosed){
+        if(positions[posChoosed[0]][posChoosed[1]] != " "){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    static String checkEnd(){
+        if(checkFull()) return "full";
+        if(checkWin(playerOne)) return "playerOne";
+        if(checkWin(playerTwo)) return "playerTwo";
+
+        return " ";
+    }
+    
+    static boolean checkFull(){
+        int aux = 0;
+        for (String[] row : positions) {
+            for (String column : row) {
+                if(column == "X" || column == "O") aux++;
+            }
+        }
+
+        if(aux == 9) return true;
+        return false;
+    }
+
+    static boolean checkWin(String player){
+        String playerChar = "X";
+
+        if(player == playerTwo) playerChar = "O";
+
+        //horizontal checking
+        if((positions[0][0] == playerChar && positions[0][1] == playerChar && positions[0][2] == playerChar) || (positions[1][0] == playerChar && positions[1][1] == playerChar && positions[1][2] == playerChar) || (positions[2][0] == playerChar && positions[2][1] == playerChar && positions[2][2] == playerChar)){
+            return true;
+        }
+
+        //horizontal checking
+        if((positions[0][0] == playerChar && positions[1][0] == playerChar && positions[2][0] == playerChar) || (positions[0][1] == playerChar && positions[1][1] == playerChar && positions[2][1] == playerChar) || (positions[0][2] == playerChar && positions[1][2] == playerChar && positions[2][2] == playerChar)){
+            return true;
+        }
+
+        //X checking
+        if((positions[0][0] == playerChar && positions[1][1] == playerChar && positions[2][2] == playerChar) || (positions[0][2] == playerChar && positions[1][1] == playerChar && positions[2][0] == playerChar)){
+            return true;
+        }
+
+        return false;
+    }
+}
