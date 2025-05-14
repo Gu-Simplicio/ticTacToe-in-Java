@@ -17,16 +17,24 @@ public class ticTacToe{
 
     public static void main(String[] args) {
         String playerTime;
+        char playAgain;
 
         do {
+            for(int i = 0, j = 0; i < positions.length; i++){
+                while(j < positions.length){
+                    positions[i][j] = " ";
+                    j++;
+                }
+                j = 0;
+            }
+
             System.out.print("Insert the 1° player's name: ");
-            playerOne = scan.nextLine();
+            playerOne = scan.next();
             
             System.out.print("Insert the 2° player's name: ");
-            playerTwo = scan.nextLine();
+            playerTwo = scan.next();
             
             playerTime = playerOne;
-
 
             do {
                 if(playerTime == playerOne){
@@ -43,17 +51,25 @@ public class ticTacToe{
                     System.out.println("Full game!");
                     break;
                 }    
-                if(checkEnd() == "playerOne"){
-                    System.out.printf("%s wins!\n", playerOne);
-                    break;
-                }
-                if(checkEnd() == "playerTwo"){
-                    System.out.printf("%s wins!\n", playerTwo);
+                if(checkEnd() == "playerOne" || checkEnd() == "playerTwo"){
+                    System.out.printf("%s wins!\n", checkEnd());
                     break;
                 }
             }while(true);
             
-            break;
+            do{
+                System.out.print("You want to play again (type 'y' or 'n')?");
+                playAgain = scan.next().charAt(0);
+
+                if(playAgain != 'n' && playAgain != 'y'){
+                    System.out.println("INSERT 'y' OR 'n'");
+                }
+            }while(playAgain != 'n' && playAgain != 'y');
+
+            if(playAgain == 'n') {
+                System.out.println("Ok, thanks!");
+                break;
+            }
         }while(true);
     
         scan.close();
@@ -86,7 +102,7 @@ public class ticTacToe{
 
         do{
             System.out.printf("\n%s, insert where you'll insert (type the letter and after the number):", player);
-            choose = scan.nextLine();
+            choose = scan.next();
 
             if(choose.length() != 2){
                 System.out.println("Insert a letter and, after, a number!");
