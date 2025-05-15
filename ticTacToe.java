@@ -15,45 +15,55 @@ public class ticTacToe{
     //instance a Scanner 
     private static Scanner scan = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        String playerTime;
-        char playAgain;
+    public static void main(String[] args) { //main method of the class
+        String playerTime; //string with the player that is playing in the moment 
+        char playAgain; //character that receive if the game will start again
 
-        do {
+        do { //do..while that starts the game
+            //for loop with 2 local variables (i and j) that resets positions (if the game was reseted)
             for(int i = 0, j = 0; i < positions.length; i++){
+                //loop while that check if each row of positions was checked
                 while(j < positions.length){
+                    //transform the column in " "
                     positions[i][j] = " ";
-                    j++;
-                }
+                    j++; //increment in j
+                } 
+                //return j to 0
                 j = 0;
             }
 
+            //capture the 1° player's name
             System.out.print("Insert the 1° player's name: ");
             playerOne = scan.next();
             
+            //capture the 2° player's name
             System.out.print("Insert the 2° player's name: ");
             playerTwo = scan.next();
             
+            //the first player starts playing
             playerTime = playerOne;
 
+            //do..while of the game 
             do {
-                if(playerTime == playerOne){
-                    play(playerOne);
+                //check what player is playing
+                if(playerTime == playerOne){ //if is the first player
+                    play(playerOne); //calls the method play with the playerOne in the argument
 
-                    playerTime = playerTwo;
-                } else {
-                    play(playerTwo);
-                    playerTime = playerOne;
+                    playerTime = playerTwo; //switch the playerTime
+                } else {//if is the second player
+                    play(playerTwo); //calls the method play with the playerOne in the argument
+
+                    playerTime = playerOne;//switch the playerTime
                 }
 
-                if(checkEnd() == "full"){
-                    drawGame();
-                    System.out.println("Full game!");
-                    break;
-                }    
-                if(checkEnd() == "playerOne" || checkEnd() == "playerTwo"){
-                    System.out.printf("%s wins!\n", checkEnd());
-                    break;
+                //check if the game is finished
+                if(checkEnd() == "full"){ //if finished  ´cause all parts of positions is in using
+                    drawGame(); //draw the game 
+                    System.out.println("Full game!"); //says that the game is full
+                    break; //restart the game 
+                } else if(checkEnd() == "playerOne" || checkEnd() == "playerTwo"){//if some player winned
+                    System.out.printf("%s wins!\n", checkEnd()); //show this message
+                    break; //stop the do..hwile
                 }
             }while(true);
             
