@@ -1,6 +1,17 @@
 # Tic tac toe game created in Java
 (to brazilians: a versão em português está mais abaixo)
 
+## Text in english
+
+### What's the purpose of this repository?
+Esse projeto serve para estudar a sintaxe básica da linguagem de programação Java, aqui foi criado um jogo da velha simples com ela
+
+### How does the game works?
+This project serves to study the basic syntax of the Java programming language, here a simple tic-tac-toe game was created with it.
+
+### Concepts studied with this project:
+With this project I studied the basic syntax of the Java programming language, using attributes in the main class (TicTacToe), methods for game functionalities, for, foreach, while and do..while loops, if-else and switch-case conditionals and improved my programming logic.
+
 ## Texto em português 
 
 ### Qual o propósito deste repositório?
